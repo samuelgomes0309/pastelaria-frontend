@@ -1,0 +1,78 @@
+import { cookies } from "next/headers";
+import { setupApi } from "./api";
+import { User } from "@/@types/user";
+import { redirect } from "next/navigation";
+import { Redirect } from "next";
+
+// Nome do cookie onde o token de autenticação será armazenado
+const COOKIEE_NAME = "@appSG.token";
+
+// Função para definir o token de autenticação
+export async function setAuthToken(token: string) {
+	if (!token) {
+		return;
+	}
+	const cookieStore = await cookies();
+	cookieStore.set(COOKIEE_NAME, token, {
+		httpOnly: true,
+		maxAge: 60 * 60 * 24 * 30, // 30 days
+		path: "/",
+		sameSite: "lax",
+		secure: process.env.NODE_ENV === "production",
+	});
+	return;
+}
+
+// Função para obter o token de autenticação
+export async function getAuthToken(): Promise<string | null> {
+	const cookieStore = await cookies();
+	const token = cookieStore.get(COOKIEE_NAME);
+	if (!token) {
+		return null;
+	}
+	return token.value;
+}
+
+// Função para limpar o token de autenticação
+export async function clearAuthToken() {
+	const cookieStore = await cookies();
+	cookieStore.delete(COOKIEE_NAME);
+	return null;
+}
+
+export async function isAuthenticated(): Promise<User | null> {
+	try {
+		const token = await getAuthToken();
+		if (!token) {
+			return null;
+		}
+		const api = setupApi();
+		const response = await api.get<User>("/me", {
+			timeout: 1000 * 5, // 5 seconds
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		return null;
+	}
+}
+
+export async function requireAuth(options: {
+	needRole: "ADMIN" | "STAFF";
+}): Promise<boolean | Redirect> {
+	try {
+		const user = await isAuthenticated();
+		if (!user) {
+			return redirect("/login");
+		}
+		const { needRole } = options;
+		if (needRole && user.role !== needRole) {
+			return false;
+		}
+		return true;
+	} catch (error) {
+		return redirect("/login");
+	}
+}
