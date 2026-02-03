@@ -3,12 +3,13 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Paleta gerada com ajuda do gpt, a validar ainda... */
 @theme {
 	/* =====================
 	   BRAND / AÇÕES PRINCIPAIS
 	===================== */
-	--color-brand-primary: #ff3f4b;
-	--color-brand-primary-hover: #f6005d;
+	--color-brand-primary: #f6005d;
+	--color-brand-primary-hover: #ff3f4b;
 	--color-brand-primary-active: #e6004c;
 
 	--color-brand-primary-soft: #ff5c6a;

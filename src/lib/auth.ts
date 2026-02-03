@@ -2,7 +2,6 @@ import { cookies } from "next/headers";
 import { setupApi } from "./api";
 import { User } from "@/@types/user";
 import { redirect } from "next/navigation";
-import { Redirect } from "next";
 
 // Nome do cookie onde o token de autenticação será armazenado
 const COOKIEE_NAME = "@appSG.token";
@@ -61,18 +60,21 @@ export async function isAuthenticated(): Promise<User | null> {
 
 export async function requireAuth(options: {
 	needRole: "ADMIN" | "STAFF";
-}): Promise<boolean | Redirect> {
-	try {
-		const user = await isAuthenticated();
-		if (!user) {
-			return redirect("/login");
-		}
-		const { needRole } = options;
-		if (needRole && user.role !== needRole) {
-			return false;
-		}
-		return true;
-	} catch (error) {
-		return redirect("/login");
+	redirectTo?: string;
+}): Promise<User> {
+	const user = await isAuthenticated();
+	if (!user) {
+		redirect("/login");
 	}
+	//Por padrão redireciona para o dashboard
+	const { needRole, redirectTo = "/dashboard" } = options;
+	// ADMIN sempre tem acesso
+	if (user.role === "ADMIN") {
+		return user;
+	}
+	// STAFF só acessa STAFF
+	if (user.role !== needRole) {
+		redirect(redirectTo);
+	}
+	return user;
 }
