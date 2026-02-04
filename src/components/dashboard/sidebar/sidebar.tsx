@@ -8,11 +8,11 @@ import { UserPen, Tags, ShoppingCart, Package, LogOut } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-interface SidebarProps {
+export interface SidebarProps {
 	user: User;
 }
 
-const menuItems = [
+export const menuItems = [
 	{
 		title: "Pedidos",
 		href: "/dashboard",
