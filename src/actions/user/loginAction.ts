@@ -12,7 +12,7 @@ export async function loginUserAction(data: LoginData) {
 		return { success: false, errors: parsedData.error.flatten().fieldErrors }; // Retorna erros de validação ao cliente referente aos campos
 	}
 	// Não precisa de passar o cookie no servidor, pois o usuario ainda não está autenticado
-	const api = setupApi();
+	const api = await setupApi();
 	try {
 		const response = await api.post<AuthResponse>("/sessions", {
 			email: parsedData.data.email,
@@ -30,8 +30,6 @@ export async function loginUserAction(data: LoginData) {
 					},
 				};
 			}
-			// Definindo o cookie com o token de autenticação
-			api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 			// Salva o token no cookie HTTP-only
 			await setAuthToken(token);
 		}

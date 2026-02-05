@@ -45,7 +45,7 @@ export async function isAuthenticated(): Promise<User | null> {
 		if (!token) {
 			return null;
 		}
-		const api = setupApi();
+		const api = await setupApi();
 		const response = await api.get<User>("/me", {
 			timeout: 1000 * 5, // 5 seconds
 			headers: {

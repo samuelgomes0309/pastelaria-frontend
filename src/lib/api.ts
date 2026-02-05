@@ -1,13 +1,9 @@
 import axios from "axios";
-import { parseCookies } from "nookies";
+import { cookies } from "next/headers";
 
-type SetupApiProps = {
-	context?: any;
-};
-
-export const setupApi = ({ context }: SetupApiProps = {}) => {
-	const cookies = parseCookies(context);
-	const token = cookies["@appSG.token"];
+export const setupApi = async () => {
+	const cookieStore = await cookies();
+	const token = cookieStore.get("@appSG.token")?.value || null;
 	const api = axios.create({
 		baseURL: process.env.NEXT_PUBLIC_API_URL as string,
 		timeout: 1000 * 5, // 5 seconds
