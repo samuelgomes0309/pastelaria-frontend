@@ -16,7 +16,7 @@ export default async function DashboardLayout({
 			<Sidebar user={user} />
 			{/* Conteúdo principal */}
 			<div className="flex flex-1 flex-col overflow-hidden">
-				{/* Side bar do mobile - A fazer */}
+				{/* Side bar do mobile*/}
 				<MobileSidebar user={user} />
 				<main className="bg-app-surface-alt flex-1">
 					<div className="container max-w-full px-4 py-6">{children}</div>
