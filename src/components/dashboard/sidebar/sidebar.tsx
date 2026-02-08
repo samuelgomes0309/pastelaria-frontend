@@ -39,7 +39,7 @@ export const menuItems = [
 export default function Sidebar({ user }: SidebarProps) {
 	const pathName = usePathname();
 	return (
-		<aside className="bg-app-background border-border-strong hidden h-screen w-64 flex-col border-r px-4 py-6 lg:flex">
+		<aside className="bg-app-background border-border-strong hidden min-h-screen w-64 flex-col border-r px-4 py-6 lg:flex">
 			{/* Header */}
 			<div className="border-text-disabled mb-6 flex flex-col gap-1 border-b px-2 pb-4">
 				<Link href={"/dashboard"} className="text-2xl">
