@@ -45,7 +45,7 @@ export default function CategoryForm() {
 		}
 	}
 	return (
-		<Card className="bg-app-surface-deep border-app-surface-elevated mt-6 w-full max-w-xl border shadow-2xl">
+		<Card className="bg-app-surface-deep border-app-surface-elevated mt-6 w-full border shadow-2xl">
 			<CardContent>
 				<form
 					className="flex w-full flex-col gap-2.5"
