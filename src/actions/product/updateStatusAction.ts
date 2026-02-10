@@ -10,7 +10,6 @@ export async function updateStatusAction({
 	status: boolean;
 	product_id: string;
 }) {
-	console.log("Updating product status:", { status, product_id });
 	const api = await setupApi();
 	try {
 		if (!product_id || status === undefined)

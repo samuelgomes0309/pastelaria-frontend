@@ -1,12 +1,16 @@
 import { Product } from "@/@types/products";
 import { setupApi } from "@/lib/api";
 
-export async function listProductsAction() {
+interface ListProductRequest {
+	status?: boolean;
+}
+
+export async function listProductsAction({ status }: ListProductRequest) {
 	const api = await setupApi();
 	try {
 		const response = await api.get<Product[]>("/products/all", {
 			params: {
-				status: false, // Filtra apenas os produtos ativos
+				status: status ?? false, // Caso nao tenha um status por padrao filtra apenas os produtos ativos
 			},
 		});
 		return response.data;

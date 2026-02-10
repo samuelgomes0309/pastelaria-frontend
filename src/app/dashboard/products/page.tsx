@@ -6,13 +6,11 @@ import { isAuthenticated } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
 export default async function Products() {
-	const products: Product[] = await listProductsAction();
+	// Implementar ativos e inativos...
+	const products: Product[] = await listProductsAction({ status: false });
 	const user = await isAuthenticated();
 	if (!user) {
 		return redirect("/login");
-	}
-	if (products.length === 0) {
-		return;
 	}
 	return (
 		<div>

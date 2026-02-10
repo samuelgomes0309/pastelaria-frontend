@@ -27,34 +27,14 @@ export default function ProductTable({ products, user }: ProductTableProps) {
 		setVisible(true);
 	}
 	return (
-		<Card className="bg-app-surface-deep border-app-surface-elevated mt-6 w-full border text-white shadow-2xl">
-			<CardContent>
-				<Table>
-					<TableHeader>
-						<TableRow>
-							<TableHead className="text-center text-white"> Imagem </TableHead>
-							<TableHead className="text-center text-white"> Nome </TableHead>
-							<TableHead className="text-center text-white"> Preço </TableHead>
-							<TableHead className="text-center text-white">
-								Categoria
-							</TableHead>
-							<TableHead className="text-center text-white">
-								Descrição
-							</TableHead>
-							<TableHead className="text-center text-white">Detalhes</TableHead>
-						</TableRow>
-					</TableHeader>
-					<TableBody>
-						{products.map((product) => (
-							<ProductItem
-								key={product.id}
-								product={product}
-								onOpenDetails={handleOpenDialog}
-							/>
-						))}
-					</TableBody>
-				</Table>
-			</CardContent>
+		<div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+			{products.map((product) => (
+				<ProductItem
+					key={product.id}
+					product={product}
+					onOpenDetails={handleOpenDialog}
+				/>
+			))}
 			{/* CORREÇÃO: Renderização condicional para evitar passar null e prevenir erro de hidratação React */}
 			{selectedProduct && (
 				<DialogProductDetails
@@ -64,6 +44,6 @@ export default function ProductTable({ products, user }: ProductTableProps) {
 					role={user.role}
 				/>
 			)}
-		</Card>
+		</div>
 	);
 }
