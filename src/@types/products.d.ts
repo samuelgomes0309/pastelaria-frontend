@@ -13,5 +13,3 @@ export interface Product {
 	productOptionals: ProductOptional[];
 	category: Category;
 }
-
-export interface ProductOptional {} //Definir depois

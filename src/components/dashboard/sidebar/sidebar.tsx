@@ -4,7 +4,14 @@ import { User } from "@/@types/user";
 import logoutAction from "@/actions/user/logoutAction";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { UserPen, Tags, ShoppingCart, Package, LogOut } from "lucide-react";
+import {
+	UserPen,
+	Tags,
+	ShoppingCart,
+	Package,
+	LogOut,
+	RectangleEllipsis,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -19,14 +26,19 @@ export const menuItems = [
 		icon: ShoppingCart,
 	},
 	{
+		title: "Categorias",
+		href: "/dashboard/categories",
+		icon: Tags,
+	},
+	{
 		title: "Produtos",
 		href: "/dashboard/products",
 		icon: Package,
 	},
 	{
-		title: "Categorias",
-		href: "/dashboard/categories",
-		icon: Tags,
+		title: "Opcionais",
+		href: "/dashboard/optionals",
+		icon: RectangleEllipsis,
 	},
 	// Validar depois se o usuário é ADMIN para mostrar esse menu
 	{
