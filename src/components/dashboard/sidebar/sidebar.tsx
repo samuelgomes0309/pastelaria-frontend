@@ -40,7 +40,6 @@ export const menuItems = [
 		href: "/dashboard/optionals",
 		icon: RectangleEllipsis,
 	},
-	// Validar depois se o usuário é ADMIN para mostrar esse menu
 	{
 		title: "Configurações",
 		href: "/dashboard/users",
@@ -63,7 +62,18 @@ export default function Sidebar({ user }: SidebarProps) {
 			<nav className="flex-1 space-y-4">
 				<ul className="flex flex-col gap-2">
 					{menuItems.map((item) => {
-						const isActive = pathName === item.href;
+						if (item.href === "/dashboard/users" && user.role !== "ADMIN") {
+							return null;
+						}
+						// Define se o item do menu está ativo.
+						// Para a rota raiz (/dashboard), ativa apenas quando a rota for exatamente igual.
+						// Para as demais rotas, ativa tanto na rota exata quanto em sub-rotas.
+						// Poderia criar uma chave exact no menu para diferenciar, mas nesse primeiro momento melhor abaixo.
+						const isActive =
+							item.href === "/dashboard"
+								? pathName === "/dashboard"
+								: pathName === item.href ||
+									pathName.startsWith(`${item.href}/`);
 						return (
 							<li key={item.href}>
 								<Link
