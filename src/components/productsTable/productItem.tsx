@@ -4,6 +4,8 @@ import { Product } from "@/@types/products";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter } from "../ui/card";
 import Image from "next/image";
+import Link from "next/link";
+import { Pen } from "lucide-react";
 
 export function ProductItem({
 	product,
@@ -49,14 +51,22 @@ export function ProductItem({
 					</p>
 				</div>
 			</CardContent>
-			<CardFooter className="p-0 px-2">
+			<CardFooter className="mb-5 flex w-full items-center gap-2 p-0 px-2">
 				<Button
-					className="bg-brand-primary hover:bg-brand-primary-hover mb-5 flex w-full cursor-pointer items-center rounded-md transition-all duration-500"
+					className="bg-brand-primary hover:bg-brand-primary-hover h-full max-h-10 flex-1 cursor-pointer items-center rounded-md py-2 transition-all duration-500"
 					type="button"
 					onClick={() => onOpenDetails(product)}
 				>
 					Detalhar
 				</Button>
+				<Link
+					href={`/dashboard/products/${product.id}/edit`}
+					className="flex h-full max-h-10 cursor-pointer items-center justify-center gap-2 rounded-md bg-blue-700 px-2.5 py-2 transition-all duration-600 hover:bg-blue-500"
+				>
+					<Pen size={26} />
+					<div className="h-full border border-l-white"></div>
+					Editar
+				</Link>
 			</CardFooter>
 		</Card>
 	);
