@@ -6,7 +6,7 @@ export const setupApi = async () => {
 	const token = cookieStore.get("@appSG.token")?.value || null;
 	const api = axios.create({
 		baseURL: process.env.NEXT_PUBLIC_API_URL as string,
-		timeout: 1000 * 5, // 5 seconds
+		timeout: 1000 * 5, // 5 segundos
 		headers: {
 			Authorization: token ? `Bearer ${token}` : "",
 		},
