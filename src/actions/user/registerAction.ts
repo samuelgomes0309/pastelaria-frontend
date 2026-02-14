@@ -11,7 +11,7 @@ export async function registerUserAction(data: RegisterData) {
 		return { success: false, errors: parsedData.error.flatten().fieldErrors }; // Retorna erros de validação ao cliente referente aos campos
 	}
 	// Não precisa de passar o cookie no servidor, pois o usuario ainda não está autenticado
-	const api = setupApi();
+	const api = await setupApi();
 	try {
 		await api.post<User>("/users", {
 			name: parsedData.data.name,
