@@ -81,7 +81,11 @@ export default function CategoryForm() {
 						disabled={isSubmitting}
 						className="bg-brand-primary hover:bg-brand-primary-hover mt-2 cursor-pointer transition-all duration-500"
 					>
-						{isSubmitting ? "Cadastrando..." : "Cadastrar"}
+						{isSubmitting ? (
+							<div className="border-b-app-background size-5 animate-spin rounded-full border border-white"></div>
+						) : (
+							"Cadastrar"
+						)}
 					</Button>
 					{error && (
 						<p className="mt-2 animate-bounce text-center text-sm text-red-500 transition">
