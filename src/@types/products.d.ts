@@ -10,6 +10,6 @@ export interface Product {
 	category_id: string;
 	createdAt: string;
 	updatedAt: string;
-	productOptionals: ProductOptional[];
+	productsOptionals: ProductOptional[];
 	category: Category;
 }

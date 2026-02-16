@@ -1,3 +1,4 @@
+import { listOptionalsAction } from "@/actions/optionals/listOptionalsAction";
 import { detailProductAction } from "@/actions/product/detailProductAction";
 import Header from "@/components/dashboard/header/header";
 import { ProductEditForm } from "@/components/productsForms/editForm";
@@ -19,13 +20,14 @@ export default async function Edit({ params }: { params: { id: string } }) {
 		});
 		return null;
 	}
+	const optionals = await listOptionalsAction();
 	return (
 		<div>
 			<Header
 				title="Atualizando produto"
 				description={`Produto - ${product.data?.name}.`}
 			/>
-			<ProductEditForm product={product.data} />
+			<ProductEditForm product={product.data} optionals={optionals} />
 		</div>
 	);
 }

@@ -180,26 +180,27 @@ export default function ProductForm({ categories }: ProductFormProps) {
 						</div>
 						<div className="flex flex-col space-y-3">
 							<Label className="text-white">Imagem</Label>
-							<div
-								className={`bg-app-background hover:border-brand-primary-hover relative flex min-h-20 flex-col items-center justify-center rounded-md border border-transparent text-white shadow-2xl transition duration-500 ${imagePreview ? "pt-4" : ""}`}
-							>
+							<div className="bg-app-background hover:border-brand-primary-hover relative flex min-h-70 flex-col items-center justify-center rounded-md border border-transparent text-white shadow-2xl transition duration-500">
 								<Input
 									type="file"
 									className="absolute z-10 h-full w-full cursor-pointer rounded-md border-none opacity-0"
 									accept="image/*"
-									// Registrar o campo de imagem no react-hook-form e lidar com a mudança para mostrar o preview
 									onChange={(e) => handleImageChange(e)}
 								/>
-								<Upload
-									className={`h-5 w-5 ${imagePreview ? "text-green-500" : "text-white"}`}
-								/>
-								<p>Clique para enviar uma imagem</p>
+								{!imagePreview && (
+									<div className="flex flex-col items-center justify-center gap-2">
+										<Upload className="h-5 w-5 text-white" />
+										<p>Clique para enviar uma imagem</p>
+									</div>
+								)}
 								{imagePreview && (
-									<img
-										src={imagePreview}
-										alt="Preview da imagem"
-										className="mt-3 max-h-40 w-full rounded-md object-cover"
-									/>
+									<div className="h-62.5 w-full overflow-hidden rounded-md">
+										<img
+											src={imagePreview}
+											alt="Preview da imagem"
+											className="h-full w-full rounded-md object-cover"
+										/>
+									</div>
 								)}
 							</div>
 							{errors.image && (
@@ -211,7 +212,11 @@ export default function ProductForm({ categories }: ProductFormProps) {
 							disabled={isSubmitting}
 							className="bg-brand-primary hover:bg-brand-primary-hover mt-2 cursor-pointer transition-all duration-500"
 						>
-							{isSubmitting ? "Cadastrando..." : "Cadastrar"}
+							{isSubmitting ? (
+								<div className="border-b-app-background size-5 animate-spin rounded-full border border-white"></div>
+							) : (
+								"Cadastrar"
+							)}
 						</Button>
 						{errorMsg && (
 							<p className="mt-2 animate-bounce text-center text-sm text-red-500 transition">
