@@ -1,8 +1,14 @@
 import { listOptionalsAction } from "@/actions/optionals/listOptionalsAction";
 import Header from "@/components/dashboard/header/header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { isAuthenticated } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export default async function Optionals() {
+	const user = await isAuthenticated();
+	if (!user) {
+		return redirect("/login");
+	}
 	const optionals = await listOptionalsAction();
 	const hasOptionals = optionals.length > 0;
 	return (
@@ -10,8 +16,8 @@ export default async function Optionals() {
 			<Header
 				title="Opcionais"
 				description="Gerencie os produtos opcionais"
-				href="/dashboard/optionals/new"
-				textLink="Cadastrar novo opcional"
+				href={user.role === "ADMIN" ? "/dashboard/optionals/new" : undefined}
+				textLink={user.role === "ADMIN" ? "Cadastrar novo opcional" : undefined}
 			/>
 			{hasOptionals ? (
 				<div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">

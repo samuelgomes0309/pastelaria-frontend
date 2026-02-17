@@ -25,8 +25,8 @@ export default async function Products({
 			<Header
 				title="Produtos"
 				description="Gerencie o cardápio de produtos"
-				href="/dashboard/products/new"
-				textLink="Cadastrar novo produto"
+				href={user.role === "ADMIN" ? "/dashboard/products/new" : undefined}
+				textLink={user.role === "ADMIN" ? "Cadastrar novo produto" : undefined}
 			/>
 			<ProductFilter />
 			{products.length === 0 ? (

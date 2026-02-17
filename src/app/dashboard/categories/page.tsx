@@ -2,8 +2,14 @@ import { Category } from "@/@types/categories";
 import { listCategoriesAction } from "@/actions/category/listCategoriesAction";
 import Header from "@/components/dashboard/header/header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { isAuthenticated } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export default async function Categories() {
+	const user = await isAuthenticated();
+	if (!user) {
+		return redirect("/login");
+	}
 	const categories: Category[] = await listCategoriesAction();
 	const hasCategories = categories.length > 0;
 	return (
@@ -12,8 +18,8 @@ export default async function Categories() {
 			<Header
 				title="Categorias"
 				description="Organize os produtos em categorias"
-				href="/dashboard/categories/new"
-				textLink="Nova categoria"
+				href={user.role === "ADMIN" ? "/dashboard/categories/new" : undefined}
+				textLink={user.role === "ADMIN" ? "Nova categoria" : undefined}
 			/>
 			{/* Lista de categorias */}
 			{hasCategories ? (

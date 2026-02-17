@@ -1,14 +1,6 @@
 "use client";
 
 import { Product } from "@/@types/products";
-import { Card, CardContent } from "../ui/card";
-import {
-	Table,
-	TableBody,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "../ui/table";
 import { ProductItem } from "./productItem";
 import { DialogProductDetails } from "./productDialog";
 import { useState } from "react";
@@ -30,6 +22,7 @@ export default function ProductTable({ products, user }: ProductTableProps) {
 		<div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
 			{products.map((product) => (
 				<ProductItem
+					user_role={user.role}
 					key={product.id}
 					product={product}
 					onOpenDetails={handleOpenDialog}

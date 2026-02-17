@@ -6,26 +6,36 @@ import { Card, CardContent, CardFooter } from "../ui/card";
 import Image from "next/image";
 import Link from "next/link";
 import { Pen } from "lucide-react";
+import { useState } from "react";
 
 export function ProductItem({
 	product,
 	onOpenDetails,
+	user_role,
 }: {
 	product: Product;
 	onOpenDetails: (product: Product) => void;
+	user_role: "ADMIN" | "STAFF";
 }) {
+	const [imageLoaded, setImageLoaded] = useState(false);
 	const price = (product.price / 100).toFixed(2); // Converte o preço de centavos para reais
 	const status = product.disabled === false ? "Ativo" : "Inativo";
 	return (
-		<Card className="bg-app-surface-deep w-full rounded-md border-none p-0 text-white shadow-2xl shadow-black/50 transition duration-500 hover:translate-y-0.5">
+		<Card className="bg-app-surface-deep w-full rounded-md border-gray-500/30 p-0 text-white shadow-2xl shadow-black/80 transition duration-500 hover:translate-y-0.5">
 			<CardContent className="p-0">
 				<div className="relative h-64 w-full">
 					<Image
 						src={product.bannerUrl}
 						alt={`Preview ${product.name}`}
 						fill
-						className="rounded-t-md object-cover"
+						className={`rounded-t-md object-cover ${imageLoaded ? "opacity-100" : "opacity-0"}`}
+						onLoad={() => setImageLoaded(true)}
 					/>
+					{!imageLoaded && (
+						<div className="absolute inset-0 flex items-center justify-center">
+							<div className="border-b-brand-primary size-6 animate-spin rounded-full border-2 border-white"></div>
+						</div>
+					)}
 				</div>
 				<div className="flex flex-col gap-2 px-2 py-3">
 					<div className="flex items-center justify-between">
@@ -59,14 +69,16 @@ export function ProductItem({
 				>
 					Detalhar
 				</Button>
-				<Link
-					href={`/dashboard/products/${product.id}/edit`}
-					className="flex h-full max-h-10 cursor-pointer items-center justify-center gap-2 rounded-md bg-blue-700 px-2.5 py-2 transition-all duration-600 hover:bg-blue-500"
-				>
-					<Pen size={26} />
-					<div className="h-full border border-l-white"></div>
-					Editar
-				</Link>
+				{user_role === "ADMIN" && (
+					<Link
+						href={`/dashboard/products/${product.id}/edit`}
+						className="flex h-full max-h-10 cursor-pointer items-center justify-center gap-2 rounded-md bg-blue-700 px-2.5 py-2 transition-all duration-600 hover:bg-blue-500"
+					>
+						<Pen size={26} />
+						<div className="h-full border border-l-white"></div>
+						Editar
+					</Link>
+				)}
 			</CardFooter>
 		</Card>
 	);
