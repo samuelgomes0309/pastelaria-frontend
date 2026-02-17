@@ -2,11 +2,16 @@ import { listOptionalsAction } from "@/actions/optionals/listOptionalsAction";
 import { detailProductAction } from "@/actions/product/detailProductAction";
 import Header from "@/components/dashboard/header/header";
 import { ProductEditForm } from "@/components/productsForms/editForm";
+import { requireAuth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
 import { toast } from "sonner";
 
 export default async function Edit({ params }: { params: { id: string } }) {
+	await requireAuth({
+		needRole: "ADMIN",
+		redirectTo: "/dashboard/products",
+	});
 	const { id } = await params;
 	if (!id) {
 		redirect("/dashboard/products");
