@@ -42,7 +42,7 @@ export const menuItems = [
 	},
 	{
 		title: "Configurações",
-		href: "/dashboard/users",
+		href: "/dashboard/user",
 		icon: UserPen,
 	},
 ];
@@ -62,7 +62,7 @@ export default function Sidebar({ user }: SidebarProps) {
 			<nav className="flex-1 space-y-4">
 				<ul className="flex flex-col gap-2">
 					{menuItems.map((item) => {
-						if (item.href === "/dashboard/users" && user.role !== "ADMIN") {
+						if (item.href === "/dashboard/user" && user.role !== "ADMIN") {
 							return null;
 						}
 						// Define se o item do menu está ativo.
