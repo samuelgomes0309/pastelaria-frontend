@@ -108,13 +108,12 @@ Sistema frontend para gerenciamento de uma **pastelaria/lanchonete**, permitindo
 
 ### Gestão de Pedidos
 
-- 🆕 Criação de novos pedidos
-- 📍 Definição de número da mesa
-- 👤 Nome opcional do cliente
-- 🛒 Adição de produtos com opcionais
-- 📨 Envio de pedidos para cozinha
+- 📋 Visualização de pedidos em andamento
+- 📊 Listagem de todos os pedidos
 - ✅ Finalização de pedidos concluídos
-- 🗑️ Remoção de pedidos em rascunho
+- 👁️ Detalhamento completo dos pedidos
+
+> **Nota**: A criação, edição e remoção de pedidos é feita através do aplicativo mobile.
 
 ### Sistema de Autenticação
 
@@ -276,7 +275,7 @@ frontend/
 │       └── profile.schema.ts    # Schema de perfil
 │
 ├── .env.example                 # Exemplo de variáveis de ambiente
-├── .env.local                   # Variáveis de ambiente local (git ignored)
+├── .env                         # Variáveis de ambiente local (git ignored)
 ├── components.json              # Configuração shadcn/ui
 ├── next.config.ts               # Configuração do Next.js
 ├── package.json                 # Dependências do projeto
@@ -307,7 +306,7 @@ As rotas protegidas verificam:
 
 ### Cookies
 
-- **@pastelaria.token**: Token JWT de autenticação
+- **@appSG.token**: Token JWT de autenticação
 - **Configuração**: httpOnly, secure (em produção), sameSite
 
 ---
@@ -349,7 +348,7 @@ Consulte a documentação completa em [`endpoints.md`](./endpoints.md)
 - **Autenticação**: `POST /session`, `POST /users`
 - **Produtos**: `GET /products`, `POST /products`, `PATCH /products/:id`
 - **Categorias**: `GET /categories`, `POST /categories`
-- **Pedidos**: `GET /orders`, `POST /orders`, `PATCH /orders/send/:id`
+- **Pedidos**: `GET /orders`, `PATCH /orders/:id/finish`
 - **Adicionais**: `GET /optionals`, `POST /optionals`
 
 ---
